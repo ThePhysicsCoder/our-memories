@@ -1,0 +1,1 @@
+console.log("Our Little Campus has begun.");
