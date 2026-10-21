@@ -1,23 +1,573 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#0e0e0d">
+  <meta name="description" content="A small collection of shared campus memories.">
+  <title>Our Little Campus</title>
 
-    <title>Our Little Campus</title>
+  <script>
+    // If the page is refreshed on a later scene, keep the opening scene hidden
+    // so it never flashes before the saved view is restored.
+    (function () {
+      var h = location.hash.replace(/^#\/?/, '').replace(/\/+$/, '').toLowerCase();
+      if (h && h !== 'opening') document.documentElement.classList.add('is-restoring');
+    })();
+  </script>
 
-    <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="style.css?v=gallery-6">
 </head>
-
 <body>
 
-    <main id="app">
+  <main class="stage">
 
-        <!-- Our experience will be built here -->
+    <!-- SCENE 1: Opening -->
+    <section class="scene" id="scene" aria-label="Opening">
+      <div class="scene__glow" aria-hidden="true"></div>
+      <div class="scene__bloom" aria-hidden="true"></div>
 
-    </main>
+      <div class="opening">
+        <p class="opening__eyebrow reveal reveal--eyebrow">A collection of little memories</p>
 
-    <script src="script.js"></script>
+        <h1 class="opening__title reveal reveal--title">
+          <span class="opening__title-line">Our Little</span>
+          <span class="opening__title-line">Campus</span>
+        </h1>
 
+        <span class="opening__rule reveal reveal--rule" aria-hidden="true"></span>
+
+        <p class="opening__subtitle reveal reveal--subtitle">
+          <span>Some places are just places...</span>
+          <span>until someone makes them memories.</span>
+        </p>
+
+        <button class="opening__enter reveal reveal--enter" id="enter-button" type="button">
+          Enter
+        </button>
+      </div>
+    </section>
+
+    <!-- SCENE 2: Arrival (illustrated memory world) -->
+    <section class="arrival" id="arrival" aria-label="Campus arrival" tabindex="-1" hidden inert>
+      <div class="arrival__glow" aria-hidden="true"></div>
+      <div class="arrival__stars" aria-hidden="true"></div>
+      <div class="arrival__mist" aria-hidden="true"></div>
+
+      <svg class="arrival__landscape" viewBox="0 0 1200 600" preserveAspectRatio="xMidYMax slice"
+           aria-hidden="true" focusable="false">
+        <defs>
+          <linearGradient id="ground-fill" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0" stop-color="#101813"/>
+            <stop offset="1" stop-color="#070a09"/>
+          </linearGradient>
+          <linearGradient id="path-fill" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0" stop-color="#b79f6a" stop-opacity="0.05"/>
+            <stop offset="1" stop-color="#b79f6a" stop-opacity="0.22"/>
+          </linearGradient>
+          <linearGradient id="door-fill" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0" stop-color="#d9bf82" stop-opacity="0.55"/>
+            <stop offset="1" stop-color="#d9bf82" stop-opacity="0.25"/>
+          </linearGradient>
+          <radialGradient id="lamp-glow">
+            <stop offset="0" stop-color="#d9bf82" stop-opacity="0.55"/>
+            <stop offset="1" stop-color="#d9bf82" stop-opacity="0"/>
+          </radialGradient>
+        </defs>
+
+        <path d="M0 405 C 200 365, 380 395, 600 372 C 820 350, 1000 392, 1200 368 L1200 600 L0 600 Z" fill="#111b17"/>
+
+        <g fill="#0f1814">
+          <circle cx="60"   cy="412" r="26"/>
+          <circle cx="110"  cy="406" r="34"/>
+          <circle cx="170"  cy="414" r="22"/>
+          <circle cx="230"  cy="408" r="30"/>
+          <circle cx="300"  cy="412" r="36"/>
+          <circle cx="365"  cy="414" r="26"/>
+          <circle cx="835"  cy="414" r="26"/>
+          <circle cx="900"  cy="410" r="34"/>
+          <circle cx="965"  cy="414" r="24"/>
+          <circle cx="1030" cy="406" r="32"/>
+          <circle cx="1100" cy="412" r="36"/>
+          <circle cx="1160" cy="414" r="26"/>
+        </g>
+
+        <rect x="0" y="430" width="1200" height="170" fill="url(#ground-fill)"/>
+
+        <g fill="#080c0b">
+          <rect x="410" y="375" width="60"  height="55"/>
+          <rect x="730" y="375" width="60"  height="55"/>
+          <rect x="470" y="350" width="260" height="80"/>
+          <rect x="465" y="346" width="270" height="6"/>
+          <rect x="575" y="290" width="50"  height="60"/>
+          <polygon points="570,290 600,250 630,290"/>
+        </g>
+
+        <g fill="none" stroke="#b79f6a" stroke-opacity="0.6" stroke-width="1.2" stroke-linecap="round">
+          <circle cx="600" cy="312" r="9"/>
+          <line x1="600" y1="312" x2="600" y2="306"/>
+          <line x1="600" y1="312" x2="604" y2="314"/>
+        </g>
+
+        <g fill="#d9bf82">
+          <rect x="490" y="366" width="12" height="18" fill-opacity="0.55"/>
+          <rect x="515" y="366" width="12" height="18" fill-opacity="0.25"/>
+          <rect x="540" y="366" width="12" height="18" fill-opacity="0.45"/>
+          <rect x="650" y="366" width="12" height="18" fill-opacity="0.30"/>
+          <rect x="675" y="366" width="12" height="18" fill-opacity="0.55"/>
+          <rect x="700" y="366" width="12" height="18" fill-opacity="0.20"/>
+          <rect x="490" y="396" width="12" height="18" fill-opacity="0.20"/>
+          <rect x="515" y="396" width="12" height="18" fill-opacity="0.45"/>
+          <rect x="540" y="396" width="12" height="18" fill-opacity="0.30"/>
+          <rect x="650" y="396" width="12" height="18" fill-opacity="0.50"/>
+          <rect x="675" y="396" width="12" height="18" fill-opacity="0.25"/>
+          <rect x="700" y="396" width="12" height="18" fill-opacity="0.40"/>
+          <rect x="425" y="392" width="10" height="14" fill-opacity="0.30"/>
+          <rect x="447" y="392" width="10" height="14" fill-opacity="0.50"/>
+          <rect x="743" y="392" width="10" height="14" fill-opacity="0.45"/>
+          <rect x="765" y="392" width="10" height="14" fill-opacity="0.25"/>
+        </g>
+
+        <path d="M588 430 V405 a12 12 0 0 1 24 0 V430 Z" fill="url(#door-fill)"/>
+
+        <path d="M570 600 C 520 560, 640 520, 594 438 L606 438 C 665 520, 560 560, 640 600 Z"
+              fill="url(#path-fill)"/>
+
+        <g>
+          <circle cx="548" cy="503" r="18" fill="url(#lamp-glow)"/>
+          <rect x="547" y="505" width="2" height="36" fill="#060908"/>
+          <circle cx="548" cy="503" r="2" fill="#e6cf95"/>
+          <circle cx="662" cy="518" r="18" fill="url(#lamp-glow)"/>
+          <rect x="661" y="520" width="2" height="34" fill="#060908"/>
+          <circle cx="662" cy="518" r="2" fill="#e6cf95"/>
+        </g>
+
+        <g fill="#060908">
+          <rect x="247" y="480" width="6" height="120"/>
+          <ellipse cx="250" cy="450" rx="55" ry="85"/>
+          <rect x="337" y="500" width="6" height="100"/>
+          <ellipse cx="340" cy="470" rx="46" ry="70"/>
+          <rect x="857" y="505" width="6" height="95"/>
+          <ellipse cx="860" cy="475" rx="44" ry="68"/>
+          <rect x="947" y="480" width="6" height="120"/>
+          <ellipse cx="950" cy="455" rx="56" ry="86"/>
+          <rect x="137" y="520" width="5" height="80"/>
+          <ellipse cx="140" cy="495" rx="38" ry="58"/>
+          <rect x="1057" y="520" width="5" height="80"/>
+          <ellipse cx="1060" cy="495" rx="38" ry="58"/>
+        </g>
+      </svg>
+
+      <div class="arrival__content">
+        <p class="arrival__line">Come on... let's walk through it once more.</p>
+
+        <button class="cue arrival__cue" id="walk-in-button" type="button">
+          <span class="cue__label">Walk in</span>
+          <span class="cue__arrow" aria-hidden="true">&rarr;</span>
+        </button>
+      </div>
+    </section>
+
+    <!-- SCENE 3: The real entrance (photograph) -->
+    <section class="entrance" id="entrance" aria-label="NIT Puducherry entrance" tabindex="-1" hidden inert>
+      <div class="entrance__frame">
+        <img class="entrance__image" id="entrance-photo"
+             data-src="assets/photos/campus-entrance.webp"
+             alt="The entrance of NIT Puducherry"
+             decoding="async">
+      </div>
+
+      <div class="entrance__tone" aria-hidden="true"></div>
+      <div class="entrance__vignette" aria-hidden="true"></div>
+
+      <div class="entrance__content">
+        <h2 class="entrance__title">NIT Puducherry</h2>
+        <p class="entrance__subtitle">Where it all happened.</p>
+
+        <button class="cue entrance__cue" id="enter-campus-button" type="button">
+          <span class="cue__label">Enter campus</span>
+          <span class="cue__arrow" aria-hidden="true">&rarr;</span>
+        </button>
+      </div>
+
+      <div class="entrance__dark" aria-hidden="true"></div>
+    </section>
+
+    <!-- SCENE 4: The memory map -->
+    <section class="map" id="map" aria-label="Memory map" tabindex="-1" hidden inert>
+
+      <div class="map__viewport" id="map-viewport" tabindex="0" role="group"
+           aria-label="Memory map. Drag to move around, scroll or pinch to zoom, or use the arrow keys and the plus and minus keys.">
+
+        <!-- The "world" is a fixed 1600 x 1000 canvas that is panned and zoomed as one piece -->
+        <div class="map__world" id="map-world">
+
+          <!-- Illustrated environment (decorative only) -->
+          <svg class="map__svg" viewBox="0 0 1600 1000" aria-hidden="true" focusable="false">
+            <defs>
+              <linearGradient id="g-land" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0" stop-color="#0f1813"/>
+                <stop offset="1" stop-color="#0a110d"/>
+              </linearGradient>
+              <radialGradient id="g-campus" cx=".5" cy=".42" r=".7">
+                <stop offset="0" stop-color="#1a2a20"/>
+                <stop offset="1" stop-color="#101a14"/>
+              </radialGradient>
+              <linearGradient id="g-water" x1="0" y1="0" x2="1" y2="1">
+                <stop offset="0" stop-color="#0d1d20"/>
+                <stop offset="1" stop-color="#060d0e"/>
+              </linearGradient>
+              <radialGradient id="g-warm">
+                <stop offset="0" stop-color="#d8b068" stop-opacity=".16"/>
+                <stop offset="1" stop-color="#d8b068" stop-opacity="0"/>
+              </radialGradient>
+              <radialGradient id="g-lamp">
+                <stop offset="0" stop-color="#e6c987" stop-opacity=".55"/>
+                <stop offset="1" stop-color="#e6c987" stop-opacity="0"/>
+              </radialGradient>
+              <radialGradient id="g-sun">
+                <stop offset="0" stop-color="#d98a52" stop-opacity=".45"/>
+                <stop offset="1" stop-color="#d98a52" stop-opacity="0"/>
+              </radialGradient>
+              <linearGradient id="g-door" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0" stop-color="#e6c987" stop-opacity=".7"/>
+                <stop offset="1" stop-color="#d8b068" stop-opacity=".3"/>
+              </linearGradient>
+
+              <!-- Window light patterns: cheap way to make buildings feel lived-in -->
+              <pattern id="win-a" width="24" height="11" patternUnits="userSpaceOnUse">
+                <rect x="4"  y="3" width="4" height="5" fill="#e0c07a" fill-opacity=".6"/>
+                <rect x="16" y="3" width="4" height="5" fill="#e0c07a" fill-opacity=".25"/>
+              </pattern>
+              <pattern id="win-b" width="10" height="13" patternUnits="userSpaceOnUse">
+                <rect x="3" y="4" width="3.5" height="5" fill="#e0c07a" fill-opacity=".5"/>
+              </pattern>
+
+              <!-- Reusable building silhouettes -->
+              <g id="b-block">
+                <rect x="-60" y="-34" width="120" height="34" fill="#080c0a"/>
+                <rect x="-60" y="-34" width="120" height="34" fill="url(#win-a)"/>
+                <rect x="-63" y="-39" width="126" height="6" fill="#0b110d"/>
+                <rect x="-63" y="-39" width="126" height="1" fill="#d8b068" fill-opacity=".25"/>
+              </g>
+              <g id="b-tall">
+                <rect x="-34" y="-66" width="68" height="66" fill="#080c0a"/>
+                <rect x="-34" y="-66" width="68" height="66" fill="url(#win-b)"/>
+                <rect x="-37" y="-70" width="74" height="5" fill="#0b110d"/>
+                <rect x="-37" y="-70" width="74" height="1" fill="#d8b068" fill-opacity=".25"/>
+              </g>
+              <g id="b-house">
+                <rect x="-22" y="-22" width="44" height="22" fill="#080c0a"/>
+                <polygon points="-27,-22 0,-42 27,-22" fill="#0b110d"/>
+                <rect x="-14" y="-15" width="6" height="8" fill="#e0c07a" fill-opacity=".55"/>
+                <rect x="6"   y="-15" width="6" height="8" fill="#e0c07a" fill-opacity=".30"/>
+              </g>
+            </defs>
+
+            <!-- Ground -->
+            <rect width="1600" height="1000" fill="url(#g-land)"/>
+
+            <!-- The campus: a softly lit plateau, with an edge that is barely there -->
+            <path d="M120 140 C 260 40, 560 20, 820 50 C 1080 80, 1380 60, 1500 190 C 1580 300, 1560 520, 1470 600 C 1360 700, 1100 700, 880 690 C 640 680, 420 700, 240 690 C 100 660, 40 560, 70 420 C 90 300, 60 220, 120 140 Z"
+                  fill="url(#g-campus)" stroke="#b79f6a" stroke-opacity=".08" stroke-width="2"/>
+            <circle cx="752" cy="380" r="460" fill="url(#g-warm)"/>
+
+            <!-- Sea, shore and sand -->
+            <path d="M0 840 C 90 845, 190 880, 290 940 C 350 975, 430 995, 520 1000 L0 1000 Z" fill="url(#g-water)"/>
+            <path d="M0 840 C 90 845, 190 880, 290 940 C 350 975, 430 995, 520 1000"
+                  fill="none" stroke="#8a6f45" stroke-opacity=".13" stroke-width="44" stroke-linecap="round"/>
+            <path d="M0 840 C 90 845, 190 880, 290 940 C 350 975, 430 995, 520 1000"
+                  fill="none" stroke="#a9885a" stroke-opacity=".22" stroke-width="10" stroke-linecap="round"/>
+            <path d="M0 840 C 90 845, 190 880, 290 940 C 350 975, 430 995, 520 1000"
+                  fill="none" stroke="#e6d7b0" stroke-opacity=".18" stroke-width="1.5" stroke-linecap="round"/>
+            <ellipse cx="150" cy="960" rx="180" ry="36" fill="url(#g-sun)"/>
+            <g fill="none" stroke="#ece4d3" stroke-opacity=".07" stroke-width="1.4" stroke-linecap="round">
+              <path d="M20 905 q18 -6 36 0 t36 0 t36 0"/>
+              <path d="M70 940 q18 -6 36 0 t36 0 t36 0"/>
+              <path d="M10 975 q18 -6 36 0 t36 0 t36 0"/>
+              <path d="M150 985 q18 -6 36 0 t36 0"/>
+            </g>
+            <g fill="#070a09">
+              <ellipse cx="318" cy="944" rx="22" ry="9"/>
+              <ellipse cx="344" cy="958" rx="14" ry="6"/>
+              <ellipse cx="96"  cy="990" rx="26" ry="9"/>
+            </g>
+
+            <!-- Trees: generated in script.js -->
+            <g id="map-scatter"></g>
+
+            <!-- Roads -->
+            <g fill="none" stroke-linecap="round">
+              <path d="M-40 650 C 160 690, 320 700, 520 760 C 700 815, 880 850, 1100 840 S 1500 790, 1660 760"
+                    stroke="#d8b068" stroke-opacity=".05" stroke-width="44"/>
+              <path id="road-main" d="M-40 650 C 160 690, 320 700, 520 760 C 700 815, 880 850, 1100 840 S 1500 790, 1660 760"
+                    stroke="#050706" stroke-width="28"/>
+              <path d="M-40 650 C 160 690, 320 700, 520 760 C 700 815, 880 850, 1100 840 S 1500 790, 1660 760"
+                    stroke="#ece4d3" stroke-opacity=".10" stroke-width="1.2" stroke-dasharray="9 15"/>
+
+              <path d="M460 1030 C 540 950, 650 918, 720 912 S 980 930, 1180 905 S 1500 870, 1660 850"
+                    stroke="#d8b068" stroke-opacity=".05" stroke-width="36"/>
+              <path id="road-low" d="M460 1030 C 540 950, 650 918, 720 912 S 980 930, 1180 905 S 1500 870, 1660 850"
+                    stroke="#050706" stroke-width="22"/>
+              <path d="M460 1030 C 540 950, 650 918, 720 912 S 980 930, 1180 905 S 1500 870, 1660 850"
+                    stroke="#ece4d3" stroke-opacity=".09" stroke-width="1.1" stroke-dasharray="8 14"/>
+            </g>
+
+            <!-- Glowing walking routes between the campus memories -->
+            <g fill="none" stroke-linecap="round">
+              <path class="route-glow" d="M288 600 C 380 560, 430 470, 540 446 S 700 420, 752 380"/>
+              <path class="route-glow" d="M752 380 C 800 320, 690 250, 704 170"/>
+              <path class="route-glow" d="M752 380 C 860 384, 980 330, 1120 240"/>
+              <path class="route-glow" d="M288 600 C 294 640, 292 672, 288 698"/>
+
+              <path id="route-1" class="route-core" pathLength="1" d="M288 600 C 380 560, 430 470, 540 446 S 700 420, 752 380"/>
+              <path id="route-2" class="route-core" pathLength="1" d="M752 380 C 800 320, 690 250, 704 170"/>
+              <path id="route-3" class="route-core" pathLength="1" d="M752 380 C 860 384, 980 330, 1120 240"/>
+              <path id="route-5" class="route-core" pathLength="1" d="M288 600 C 294 640, 292 672, 288 698"/>
+
+              <!-- Fainter, dotted paths that lead beyond the campus -->
+              <path class="route-outside" d="M288 698 C 272 760, 232 812, 200 845"/>
+              <path class="route-outside" d="M288 698 C 380 790, 560 880, 720 912"/>
+            </g>
+
+            <!-- Background campus buildings -->
+            <use href="#b-block" transform="translate(500 236)"/>
+            <use href="#b-tall"  transform="translate(340 372) scale(.9)"/>
+            <use href="#b-block" transform="translate(950 170) scale(.9)"/>
+            <use href="#b-tall"  transform="translate(1010 336) scale(.8)"/>
+            <use href="#b-block" transform="translate(940 540)"/>
+            <use href="#b-house" transform="translate(520 530)"/>
+            <use href="#b-block" transform="translate(1390 340) scale(.8)"/>
+            <use href="#b-house" transform="translate(640 610)"/>
+            <use href="#b-house" transform="translate(1160 620)"/>
+            <use href="#b-house" transform="translate(410 200)"/>
+            <use href="#b-house" transform="translate(1260 150) scale(.9)"/>
+
+            <!-- NIT Puducherry: the gate -->
+            <g transform="translate(268 594)">
+              <circle cx="0" cy="-26" r="96" fill="url(#g-warm)"/>
+              <rect x="-62" y="-52" width="124" height="52" fill="#0b100d"/>
+              <rect x="-66" y="-62" width="132" height="12" fill="#0e1510"/>
+              <rect x="-66" y="-62" width="132" height="2" fill="#b79f6a" fill-opacity=".3"/>
+              <path d="M-46 0 V-22 a12 12 0 0 1 24 0 V0 Z M-12 0 V-26 a12 12 0 0 1 24 0 V0 Z M22 0 V-22 a12 12 0 0 1 24 0 V0 Z"
+                    fill="url(#g-door)"/>
+            </g>
+
+            <!-- Ganesha Temple -->
+            <g transform="translate(684 164)">
+              <circle cx="0" cy="-34" r="72" fill="url(#g-warm)"/>
+              <g fill="#080c0a">
+                <path d="M-30 0 L-26 -16 H26 L30 0 Z"/>
+                <path d="M-23 -16 L-19 -32 H19 L23 -16 Z"/>
+                <path d="M-17 -32 L-13 -46 H13 L17 -32 Z"/>
+                <path d="M-11 -46 Q0 -76 11 -46 Z"/>
+                <rect x="-1" y="-86" width="2" height="12"/>
+              </g>
+              <g fill="#e0c07a">
+                <rect x="-4"  y="-12" width="8" height="10" fill-opacity=".7"/>
+                <rect x="-15" y="-28" width="4" height="6"  fill-opacity=".4"/>
+                <rect x="11"  y="-28" width="4" height="6"  fill-opacity=".4"/>
+                <rect x="-2"  y="-42" width="4" height="5"  fill-opacity=".5"/>
+              </g>
+            </g>
+
+            <!-- Library -->
+            <g transform="translate(732 374)">
+              <circle cx="0" cy="-30" r="96" fill="url(#g-warm)"/>
+              <use href="#b-block" transform="scale(1.15)"/>
+              <use href="#b-tall"  transform="translate(0 -36) scale(1.1)"/>
+              <rect x="-22" y="-8" width="44" height="8" fill="#d8b068" fill-opacity=".2"/>
+            </g>
+
+            <!-- Classroom -->
+            <g transform="translate(1100 234)">
+              <circle cx="0" cy="-24" r="80" fill="url(#g-warm)"/>
+              <use href="#b-block" transform="scale(1.2)"/>
+              <use href="#b-tall"  transform="translate(-78 0) scale(.6)"/>
+            </g>
+
+            <!-- Rakshan's House -->
+            <g transform="translate(1260 464)">
+              <circle cx="0" cy="-20" r="60" fill="url(#g-warm)"/>
+              <use href="#b-house" transform="scale(1.3)"/>
+              <circle cx="46" cy="-12" r="14" fill="#0b140e"/>
+            </g>
+            
+            <!-- Campus Roads: a pair of street lamps on the main road -->
+            <g transform="translate(620 772)">
+              <circle cx="0" cy="-20" r="54" fill="url(#g-warm)"/>
+              <rect x="-1" y="-30" width="2" height="30" fill="#060908"/>
+              <circle cx="0" cy="-31" r="11" fill="url(#g-lamp)"/>
+              <circle cx="0" cy="-31" r="2" fill="#f0dca4"/>
+            </g>
+            <g transform="translate(676 800)">
+              <rect x="-1" y="-28" width="2" height="28" fill="#060908"/>
+              <circle cx="0" cy="-29" r="10" fill="url(#g-lamp)"/>
+              <circle cx="0" cy="-29" r="2" fill="#f0dca4"/>
+            </g>
+
+            <!-- Other Memories: a lantern, with photographs left lying beneath it -->
+            <g transform="translate(696 904)">
+              <circle cx="0" cy="-10" r="52" fill="url(#g-warm)"/>
+              <rect x="-1" y="-34" width="2" height="34" fill="#060908"/>
+              <rect x="-6" y="-46" width="12" height="12" rx="2" fill="#0c0f0c"/>
+              <rect x="-4" y="-44" width="8" height="8" fill="#e6c987" fill-opacity=".7"/>
+              <circle cx="0" cy="-40" r="14" fill="url(#g-lamp)"/>
+              <rect x="12" y="-9" width="14" height="10" fill="#d6cbb3" fill-opacity=".5" transform="rotate(-8 19 -4)"/>
+              <rect x="22" y="-11" width="14" height="10" fill="#d6cbb3" fill-opacity=".4" transform="rotate(7 29 -6)"/>
+            </g>
+
+            <!-- NIT Trichy event: a lit stage -->
+            <g transform="translate(1324 884)">
+              <polygon points="-24,-24 -64,-96 -40,-96" fill="#e6c987" fill-opacity=".07"/>
+              <polygon points="24,-24 64,-96 40,-96"    fill="#e6c987" fill-opacity=".07"/>
+              <polygon points="0,-26 -14,-100 14,-100"  fill="#e6c987" fill-opacity=".06"/>
+              <circle cx="0" cy="-14" r="60" fill="url(#g-warm)"/>
+              <rect x="-36" y="-28" width="72" height="28" fill="#080c0a"/>
+              <rect x="-30" y="-24" width="60" height="16" fill="#e6c987" fill-opacity=".28"/>
+              <rect x="-36" y="-30" width="72" height="3"  fill="#b79f6a" fill-opacity=".35"/>
+              <g fill="#050706">
+                <ellipse cx="-22" cy="6" rx="5" ry="3"/>
+                <ellipse cx="-8"  cy="8" rx="5" ry="3"/>
+                <ellipse cx="8"   cy="7" rx="5" ry="3"/>
+                <ellipse cx="22"  cy="6" rx="5" ry="3"/>
+              </g>
+            </g>
+
+            <!-- Lamps along paths and roads: generated in script.js -->
+            <g id="map-lights"></g>
+          </svg>
+
+          <!-- Region labels, photo cards and markers are built from the data in script.js -->
+          <div class="map__regions" id="map-regions"></div>
+          <div class="map__cards" id="map-cards"></div>
+          <div class="map__markers" id="map-markers"></div>
+        </div>
+      </div>
+
+      <div class="map-hud">
+        <p class="map-hud__eyebrow">A collection of little memories</p>
+        <p class="map-hud__title">Our Little Campus</p>
+      </div>
+
+      <!-- Appears only while a location card is open -->
+      <button class="cue map-back" id="map-back" type="button">
+        <span class="cue__arrow" aria-hidden="true">&larr;</span>
+        <span class="cue__label">Back to map</span>
+      </button>
+
+      <div class="map-controls" aria-label="Map zoom">
+        <button class="map-controls__btn" id="map-zoom-in" type="button" aria-label="Zoom in">+</button>
+        <button class="map-controls__btn" id="map-zoom-out" type="button" aria-label="Zoom out">&minus;</button>
+        <button class="map-controls__btn map-controls__btn--reset" id="map-reset" type="button" aria-label="Show the whole map">&#9678;</button>
+      </div>
+
+      <p class="map-hint" id="map-hint">Drag to wander &middot; Tap a place</p>
+
+      <!-- Memory preview panel (side card on desktop, bottom sheet on phones) -->
+      <aside class="memory" id="memory-panel" role="dialog" aria-labelledby="memory-title"
+             aria-hidden="true" tabindex="-1" inert>
+        <span class="memory__handle" aria-hidden="true"></span>
+
+        <button class="memory__close" id="memory-close" type="button" aria-label="Close">&times;</button>
+
+        <div class="memory__content" id="memory-content">
+          <figure class="memory__photo">
+            <div class="memory__frame">
+              <img class="memory__img" id="memory-img" alt="" hidden>
+              <div class="memory__placeholder" id="memory-placeholder">
+                <svg viewBox="0 0 48 36" width="34" height="26" aria-hidden="true" focusable="false">
+                  <rect x="1" y="1" width="46" height="34" rx="2" fill="none" stroke="currentColor" stroke-opacity=".5"/>
+                  <path d="M4 30 L17 16 L26 25 L33 18 L44 30" fill="none" stroke="currentColor" stroke-opacity=".5"/>
+                  <circle cx="35" cy="10" r="3" fill="none" stroke="currentColor" stroke-opacity=".5"/>
+                </svg>
+                <span>Photograph coming soon</span>
+              </div>
+            </div>
+          </figure>
+
+          <div class="memory__body">
+            <p class="memory__category" id="memory-category"></p>
+            <h2 class="memory__title" id="memory-title"></h2>
+            <p class="memory__tagline" id="memory-tagline"></p>
+            <p class="memory__text" id="memory-text"></p>
+          </div>
+        </div>
+
+        <button class="cue memory__cue" id="memory-view" type="button">
+          <span class="cue__label">View memories</span>
+          <span class="cue__arrow" aria-hidden="true">&rarr;</span>
+        </button>
+        <p class="memory__note" id="memory-note" role="status"></p>
+
+        <nav class="memory__nav" aria-label="Browse places">
+          <button class="memory__step" id="memory-prev" type="button" aria-label="Previous place">&lsaquo;</button>
+          <span class="memory__count" id="memory-count"></span>
+          <button class="memory__step" id="memory-next" type="button" aria-label="Next place">&rsaquo;</button>
+        </nav>
+      </aside>
+
+    </section>
+
+    <!-- SCENE 5: Photo gallery (Ike Beach for now). Filled in by script.js -->
+    <section class="gallery" id="gallery" aria-labelledby="gallery-title" tabindex="-1" hidden inert>
+      <div class="gallery__glow" aria-hidden="true"></div>
+
+      <div class="gallery__bar">
+        <button class="cue gallery__back" id="gallery-back" type="button">
+          <span class="cue__arrow" aria-hidden="true">&larr;</span>
+          <span class="cue__label">Back to map</span>
+        </button>
+      </div>
+
+      <div class="gallery__inner">
+        <header class="gallery__header">
+          <p class="gallery__eyebrow" id="gallery-eyebrow"></p>
+          <h2 class="gallery__title" id="gallery-title"></h2>
+          <span class="gallery__rule" aria-hidden="true"></span>
+          <p class="gallery__subtitle" id="gallery-subtitle"></p>
+          <p class="gallery__count" id="gallery-count"></p>
+        </header>
+
+        <p class="gallery__status" id="gallery-status" role="status"></p>
+
+        <ul class="gallery__grid" id="gallery-grid"></ul>
+
+        <section class="gallery__motion" id="gallery-motion" aria-labelledby="gallery-motion-title" hidden>
+          <h3 class="gallery__section-title" id="gallery-motion-title"></h3>
+
+          <div class="gallery__video-frame" id="gallery-video-frame">
+            <video class="gallery__video" id="gallery-video" controls playsinline preload="metadata"></video>
+          </div>
+
+          <p class="gallery__note" id="gallery-video-note" role="status"></p>
+        </section>
+      </div>
+    </section>
+
+    <!-- Full-screen photograph viewer (sits above the gallery) -->
+    <div class="lightbox" id="lightbox" role="dialog" aria-modal="true" aria-label="Photograph viewer"
+         aria-hidden="true" inert>
+      <div class="lightbox__stage" id="lightbox-stage">
+        <img class="lightbox__img is-changing" id="lightbox-img" alt="" decoding="async">
+      </div>
+
+      <button class="lightbox__close" id="lightbox-close" type="button" aria-label="Close photograph">&times;</button>
+
+      <div class="lightbox__bar">
+        <button class="lightbox__step" id="lightbox-prev" type="button" aria-label="Previous photograph">&lsaquo;</button>
+
+        <div class="lightbox__info">
+          <p class="lightbox__caption" id="lightbox-caption" hidden></p>
+          <p class="lightbox__count" id="lightbox-count" aria-live="polite"></p>
+        </div>
+
+        <button class="lightbox__step" id="lightbox-next" type="button" aria-label="Next photograph">&rsaquo;</button>
+      </div>
+    </div>
+
+  </main>
+
+  <script src="script.js?v=gallery-6" defer></script>
 </body>
 </html>
