@@ -16,7 +16,7 @@
     })();
   </script>
 
-  <link rel="stylesheet" href="style.css?v=gallery-6">
+  <link rel="stylesheet" href="style.css?v=memory-game-1">
 </head>
 <body>
 
@@ -42,9 +42,10 @@
           <span>until someone makes them memories.</span>
         </p>
 
-        <button class="opening__enter reveal reveal--enter" id="enter-button" type="button">
-          Enter
-        </button>
+        <div class="opening__actions reveal reveal--enter">
+          <button class="opening__enter" id="enter-button" type="button">Enter</button>
+          <button class="opening__game" id="guess-memory-button" type="button">Guess the Memory <span aria-hidden="true">↗</span></button>
+        </div>
       </div>
     </section>
 
@@ -448,6 +449,7 @@
       <div class="map-hud">
         <p class="map-hud__eyebrow">A collection of little memories</p>
         <p class="map-hud__title">Our Little Campus</p>
+        
       </div>
 
       <!-- Appears only while a location card is open -->
@@ -509,6 +511,44 @@
 
     </section>
 
+    <!-- GAME: Guess the Memory -->
+    <section class="memory-game" id="memory-game" aria-labelledby="game-title" tabindex="-1" hidden inert>
+      <div class="memory-game__glow" aria-hidden="true"></div>
+      <header class="memory-game__topbar">
+        <button class="cue memory-game__back" id="game-home" type="button"><span aria-hidden="true">←</span><span class="cue__label">Back to opening</span></button>
+        <p class="memory-game__eyebrow">A little game of shared memories</p>
+      </header>
+      <div class="memory-game__content" id="game-content">
+        <p class="memory-game__progress" id="game-progress">MEMORY 1 OF 5</p>
+        <div class="memory-game__progress-track" aria-hidden="true"><span id="game-progress-fill"></span></div>
+        <h2 class="memory-game__title" id="game-title">Guess the Memory</h2>
+        <p class="memory-game__question" id="game-question"></p>
+        <figure class="memory-game__figure">
+          <img id="game-image" src="" alt="A cropped clue from one of our memories" decoding="async">
+          <figcaption id="game-image-caption">A little clue from a day worth remembering.</figcaption>
+        </figure>
+        <div class="memory-game__answers" id="game-answers" aria-label="Answer choices"></div>
+        <p class="memory-game__feedback" id="game-feedback" role="status" aria-live="polite"></p>
+        <div class="memory-game__reveal" id="game-reveal" hidden>
+          <img id="game-full-image" src="" alt="The full memory revealed" decoding="async">
+          <p class="memory-game__reveal-note" id="game-reveal-note">There it is — the full memory. ❤️</p>
+          <button class="opening__enter memory-game__next" id="game-next" type="button">Next Memory →</button>
+        </div>
+      </div>
+      <section class="memory-game__ending" id="game-ending" aria-labelledby="game-ending-title" hidden>
+        <p class="memory-game__eyebrow">Five little memories, one big thank you</p>
+        <h2 id="game-ending-title">Some Days Stay Forever</h2>
+        <p>Those days will stay with me forever.</p>
+        <p>Thank you for the memories, the laughter, the little moments, and everything that made those days special.</p>
+        <p>No matter how much time passes, a part of me will always cherish those moments.</p>
+        <p class="memory-game__final-line">Thank you for everything. ❤️</p>
+        <div class="memory-game__ending-actions">
+          <button class="opening__enter" id="game-play-again" type="button">Play Again</button>
+          <button class="memory-game__text-button" id="game-ending-home" type="button">Back to Our Little Campus</button>
+        </div>
+      </section>
+    </section>
+
     <!-- SCENE 5: Photo gallery (Ike Beach for now). Filled in by script.js -->
     <section class="gallery" id="gallery" aria-labelledby="gallery-title" tabindex="-1" hidden inert>
       <div class="gallery__glow" aria-hidden="true"></div>
@@ -568,6 +608,6 @@
 
   </main>
 
-  <script src="script.js?v=gallery-6" defer></script>
+  <script src="script.js?v=memory-game-1" defer></script>
 </body>
 </html>

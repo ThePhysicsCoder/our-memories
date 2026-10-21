@@ -2066,3 +2066,52 @@ body {
     opacity: 0;
   }
 }
+
+/* ==========================================================
+   GUESS THE MEMORY — birthday mini-game
+   ========================================================== */
+.opening__actions { display:flex; flex-direction:column; align-items:center; gap:.8rem; margin-top:clamp(2.5rem,8vh,4rem); }
+.opening__actions .opening__enter { margin-top:0; }
+.opening__game { min-height:2.8rem; padding:.65rem 1rem; color:var(--muted); background:transparent; border:1px solid rgba(183,159,106,.22); font:inherit; font-size:.83rem; letter-spacing:.08em; cursor:pointer; transition:color .25s ease,border-color .25s ease,background .25s ease; }
+.opening__game span { color:var(--accent); margin-left:.35rem; }
+.opening__game:hover,.opening__game:focus-visible { color:var(--ivory); border-color:var(--accent); background:rgba(183,159,106,.07); outline-offset:3px; }
+.reveal--enter { animation-delay:7s; }
+
+.memory-game { position:fixed; inset:0; z-index:20; overflow-y:auto; overscroll-behavior:contain; background:radial-gradient(ellipse at 50% 0%,rgba(183,159,106,.11),transparent 45%),var(--bg); color:var(--ivory); padding:max(1rem,env(safe-area-inset-top)) max(1rem,env(safe-area-inset-right)) max(2rem,env(safe-area-inset-bottom)) max(1rem,env(safe-area-inset-left)); }
+.memory-game__glow { position:fixed; inset:0; pointer-events:none; background:radial-gradient(ellipse at 50% 45%,transparent 25%,rgba(0,0,0,.24) 100%); }
+.memory-game__topbar,.memory-game__content,.memory-game__ending { position:relative; width:min(100%,42rem); margin-inline:auto; }
+.memory-game__topbar { display:flex; flex-direction:column; align-items:flex-start; gap:.7rem; padding-bottom:1.3rem; border-bottom:1px solid rgba(183,159,106,.18); }
+.memory-game__back { min-height:2.6rem; padding-top:.45rem; padding-bottom:.45rem; font-size:.68rem; letter-spacing:.16em; }
+.memory-game__eyebrow { margin:0; color:var(--faint); font-size:.68rem; letter-spacing:.2em; line-height:1.7; text-transform:uppercase; }
+.memory-game__content { padding:clamp(1.5rem,5vw,2.5rem) 0 2rem; }
+.memory-game__progress { margin:0 0 .7rem; color:var(--accent); font-size:.7rem; letter-spacing:.22em; }
+.memory-game__progress-track { height:2px; background:rgba(236,228,211,.12); margin-bottom:1.8rem; overflow:hidden; }
+.memory-game__progress-track span { display:block; width:20%; height:100%; background:var(--accent); transition:width .35s ease; }
+.memory-game__title { margin:0 0 .75rem; font-size:clamp(1.8rem,7vw,3rem); font-weight:400; line-height:1.15; }
+.memory-game__question { margin:0 0 1.2rem; color:var(--muted); font-size:clamp(1rem,3.8vw,1.2rem); line-height:1.6; }
+.memory-game__figure { margin:0 0 1.3rem; padding:.6rem; border:1px solid rgba(183,159,106,.25); background:rgba(255,255,255,.018); }
+.memory-game__figure img { display:block; width:100%; max-height: min(38vh,360px); min-height:150px; object-fit:contain; background:#090a09; }
+.memory-game__figure figcaption { padding:.65rem .25rem .15rem; color:var(--faint); font-size:.78rem; font-style:italic; line-height:1.5; }
+.memory-game__image-missing { display:none !important; }
+.memory-game__answers { display:grid; grid-template-columns:1fr; gap:.65rem; }
+.memory-game__answer { width:100%; min-height:3.25rem; padding:.9rem 1rem; text-align:left; color:var(--ivory); background:rgba(236,228,211,.035); border:1px solid rgba(183,159,106,.28); font:inherit; font-size:1rem; line-height:1.35; cursor:pointer; transition:background .2s ease,border-color .2s ease,transform .2s ease; touch-action:manipulation; }
+.memory-game__answer:hover:not(:disabled),.memory-game__answer:focus-visible { border-color:var(--accent); background:rgba(183,159,106,.09); outline-offset:3px; }
+.memory-game__answer:active:not(:disabled) { transform:scale(.99); }
+.memory-game__answer.is-wrong { border-color:rgba(196,125,108,.7); background:rgba(196,125,108,.08); }
+.memory-game__answer.is-correct { border-color:var(--accent); background:rgba(183,159,106,.12); }
+.memory-game__answer:disabled { cursor:default; opacity:.9; }
+.memory-game__feedback { min-height:1.5rem; margin:.8rem 0 0; color:var(--accent); font-size:.9rem; line-height:1.5; }
+.memory-game__reveal { margin-top:1rem; padding-top:1rem; border-top:1px solid rgba(183,159,106,.22); animation:game-reveal-in .55s ease both; }
+.memory-game__reveal img { display:block; width:100%; max-height:55vh; object-fit:contain; background:#080908; border:1px solid rgba(183,159,106,.2); }
+.memory-game__reveal-note { margin:.85rem 0 1rem; color:var(--muted); font-size:1rem; font-style:italic; line-height:1.6; }
+.memory-game__next { margin-top:.25rem; min-height:3rem; }
+.memory-game__ending { padding:clamp(3rem,10vh,6rem) 0; text-align:center; }
+.memory-game__ending h2 { margin:1.2rem 0 2rem; color:var(--accent); font-size:clamp(2rem,8vw,3.8rem); font-weight:400; line-height:1.15; }
+.memory-game__ending p:not(.memory-game__eyebrow) { max-width:34rem; margin:0 auto 1.1rem; color:var(--muted); font-size:clamp(1rem,3.8vw,1.18rem); line-height:1.9; }
+.memory-game__ending .memory-game__final-line { margin-top:1.8rem !important; color:var(--ivory) !important; font-size:1.2rem !important; }
+.memory-game__ending-actions { display:flex; flex-direction:column; align-items:center; gap:1rem; margin-top:2rem; }
+.memory-game__text-button { padding:.7rem; border:0; border-bottom:1px solid rgba(183,159,106,.3); color:var(--muted); background:transparent; font:inherit; cursor:pointer; }
+.memory-game__text-button:hover,.memory-game__text-button:focus-visible { color:var(--ivory); border-color:var(--accent); }
+@keyframes game-reveal-in { from { opacity:0; transform:translateY(10px); } to { opacity:1; transform:translateY(0); } }
+@media (min-width:600px) { .opening__actions { flex-direction:row; justify-content:center; gap:1rem; } .memory-game__topbar { flex-direction:row; align-items:center; justify-content:space-between; } .memory-game__answers { grid-template-columns:1fr; } .memory-game__ending-actions { flex-direction:row; justify-content:center; } }
+@media (prefers-reduced-motion:reduce) { .memory-game *, .opening__game { animation:none !important; transition:none !important; scroll-behavior:auto !important; } }

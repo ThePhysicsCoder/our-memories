@@ -106,15 +106,15 @@
     },
     {
       id: 'ike-beach',
-      title: 'Ike Beach',
+      title: 'Beach',
       category: 'beyond',
       x: 12.5, y: 84.5,
       label: 'right',
       card: { dx: -120, dy: 10, rot: 4 },
       tagline: 'A memory lives here.',
-      description: 'Placeholder: a short memory about Ike Beach will go here.',
+      description: 'Placeholder: a short memory about Beach will go here.',
       image: 'assets/photos/beach.webp',          // map thumbnail (unchanged)
-      imageAlt: 'Ike Beach by the sea',
+      imageAlt: 'Beach by the sea',
       memories: []
     },
     {
@@ -246,21 +246,21 @@
     // "on their way" note. To open one: upload the files, then delete its
     // `enabled: false` line (or change it to true).
     'ganesha-temple': galleryFor({
-      enabled: false,
+      enabled: true,
       title: 'Ganesha Temple',
       subtitle: 'A little collection of moments at the temple.',
       photoFolder: 'ganesha_temple', prefix: 'ganesha_temple'
     }),
 
     'classroom': galleryFor({
-      enabled: false,
+      enabled: true,
       title: 'Classroom',
       subtitle: 'A little collection of moments in the classroom.',
       photoFolder: 'classroom', prefix: 'classroom'
     }),
 
     'other-memories': galleryFor({
-      enabled: false,
+      enabled: true,
       title: 'Other Memories',
       subtitle: 'A little collection of moments that belong everywhere.',
       photoFolder: 'others', prefix: 'others'
@@ -280,17 +280,19 @@
   const entrance = document.getElementById('entrance');
   const mapScene = document.getElementById('map');
   const galleryScene = document.getElementById('gallery');
+  const gameScene = document.getElementById('memory-game');
   const photo = document.getElementById('entrance-photo');
 
   const enterButton = document.getElementById('enter-button');
+  const guessMemoryButton = document.getElementById('guess-memory-button');
   const walkInButton = document.getElementById('walk-in-button');
   const enterCampusButton = document.getElementById('enter-campus-button');
 
   const viewport = document.getElementById('map-viewport');
   const world = document.getElementById('map-world');
 
-  if (!scene || !arrival || !entrance || !mapScene || !galleryScene || !photo || !viewport || !world ||
-      !enterButton || !walkInButton || !enterCampusButton) return;
+  if (!scene || !arrival || !entrance || !mapScene || !galleryScene || !gameScene || !photo || !viewport || !world ||
+      !enterButton || !guessMemoryButton || !walkInButton || !enterCampusButton) return;
 
   const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
 
@@ -522,7 +524,7 @@
     raw = raw.trim().toLowerCase();
 
     if (raw === '' || raw === 'opening') return makeRoute('opening');
-    if (raw === 'arrival' || raw === 'gate' || raw === 'map') return makeRoute(raw);
+    if (raw === 'arrival' || raw === 'gate' || raw === 'map' || raw === 'game') return makeRoute(raw);
 
     if (raw.indexOf('location') === 0) {
       const match = raw.match(/^location\/([^/]+)$/);
@@ -561,6 +563,8 @@
       document.title = GALLERIES[route.id].title + ' \u00B7 Memories \u00B7 ' + base;
     } else if (route.name === 'map') {
       document.title = 'Memory Map \u00B7 ' + base;
+    } else if (route.name === 'game') {
+      document.title = 'Guess the Memory \u00B7 ' + base;
     } else {
       document.title = base;
     }
@@ -575,6 +579,12 @@
     clearTimers();
     currentKey = route.key;
     currentScene = target;
+
+    // Keep the game and gallery as separate views.
+    if (target !== 'game') {
+      gameModule.hide();
+      retire(gameScene);
+    }
 
     // Leaving the gallery (or never in it)
     if (target !== 'gallery') {
@@ -591,6 +601,16 @@
 
     if (target === 'opening') {
       showOpeningNow();
+
+    } else if (target === 'game') {
+      retire(scene);
+      retire(arrival);
+      retire(entrance);
+      retire(mapScene);
+      retire(galleryScene);
+      present(gameScene);
+      gameScene.focus({ preventScroll: true });
+      gameModule.show();
 
     } else if (target === 'arrival') {
       if (animate && from === 'opening') transitionToArrival();
@@ -667,6 +687,10 @@
   }
 
   // ---------- Buttons that move the story forward ----------
+
+  guessMemoryButton.addEventListener('click', () => {
+    navigate('#game');
+  });
 
   enterButton.addEventListener('click', () => {
     console.log('Entering Our Little Campus...');
@@ -1913,6 +1937,130 @@
     });
 
     return { show, hide };
+  })();
+
+  // ==========================================================
+  // 5b. GUESS THE MEMORY GAME
+  // ==========================================================
+
+  const gameModule = (() => {
+    const questions = [
+      { question: 'Where are we in this picture?', options: ['Library', 'Classroom', 'Vidhya Tuition'], correct: 0 },
+      { question: 'We reached Poovam bus stop during this journey. Where did we start from?', options: ['Kumbakonam Bus Stand', 'Trichy', 'Karaikal'], correct: 2 },
+      { question: 'Where were we when this photo was taken?', options: ['Sigma Hall', 'NITT', 'KI-RA Auditorium'], correct: 1 },
+      { question: 'Where was this photo taken?', options: ['Admin Block', 'SCB', 'Pentagon'], correct: 0 },
+      { question: 'Where was this memory captured?', options: ['Zee Blue', 'Guest House', 'Admin Block'], correct: 0 }
+    ];
+
+    const content = document.getElementById('game-content');
+    const progress = document.getElementById('game-progress');
+    const progressFill = document.getElementById('game-progress-fill');
+    const title = document.getElementById('game-title');
+    const questionText = document.getElementById('game-question');
+    const clueImage = document.getElementById('game-image');
+    const imageCaption = document.getElementById('game-image-caption');
+    const answers = document.getElementById('game-answers');
+    const feedback = document.getElementById('game-feedback');
+    const reveal = document.getElementById('game-reveal');
+    const fullImage = document.getElementById('game-full-image');
+    const revealNote = document.getElementById('game-reveal-note');
+    const nextButton = document.getElementById('game-next');
+    const ending = document.getElementById('game-ending');
+
+    let current = 0;
+    let revealed = false;
+
+    function assetPath(kind, index) {
+      return 'assets/photos/game/' + kind + '/memory' + String(index + 1).padStart(2, '0') + '.webp';
+    }
+
+    function setImage(img, path, fallbackText) {
+      img.onerror = () => {
+        img.removeAttribute('src');
+        img.alt = fallbackText;
+        img.classList.add('memory-game__image-missing');
+      };
+      img.onload = () => img.classList.remove('memory-game__image-missing');
+      img.src = path;
+    }
+
+    function renderQuestion() {
+      const item = questions[current];
+      revealed = false;
+      ending.hidden = true;
+      content.hidden = false;
+      progress.textContent = 'MEMORY ' + (current + 1) + ' OF ' + questions.length;
+      progressFill.style.width = ((current + 1) / questions.length * 100) + '%';
+      title.textContent = 'Guess the Memory';
+      questionText.textContent = item.question;
+      imageCaption.textContent = 'A little clue from a day worth remembering.';
+      setImage(clueImage, assetPath('clues', current), 'Cropped clue image for memory ' + (current + 1));
+      reveal.hidden = true;
+      fullImage.removeAttribute('src');
+      feedback.textContent = '';
+      answers.replaceChildren();
+      item.options.forEach((option, index) => {
+        const button = document.createElement('button');
+        button.type = 'button';
+        button.className = 'memory-game__answer';
+        button.textContent = String.fromCharCode(65 + index) + '. ' + option;
+        button.addEventListener('click', () => chooseAnswer(index, button));
+        answers.appendChild(button);
+      });
+      nextButton.textContent = current === questions.length - 1 ? 'See the final message →' : 'Next Memory →';
+    }
+
+    function chooseAnswer(index, button) {
+      if (revealed) return;
+      const item = questions[current];
+      if (index !== item.correct) {
+        feedback.textContent = 'Not quite — have another look and try again. ❤️';
+        button.classList.remove('is-wrong');
+        void button.offsetWidth;
+        button.classList.add('is-wrong');
+        return;
+      }
+      revealed = true;
+      feedback.textContent = 'You remembered it! ❤️';
+      answers.querySelectorAll('button').forEach((answer) => {
+        answer.disabled = true;
+        if (answer === button) answer.classList.add('is-correct');
+      });
+      setImage(fullImage, assetPath('full', current), 'Full memory image ' + (current + 1));
+      reveal.hidden = false;
+      revealNote.textContent = current === questions.length - 1
+        ? 'The last memory — and one more thing to say.'
+        : 'There it is — the full memory. ❤️';
+      reveal.scrollIntoView({ behavior: window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth', block: 'nearest' });
+    }
+
+    function finish() {
+      content.hidden = true;
+      ending.hidden = false;
+      ending.scrollIntoView({ behavior: window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth', block: 'start' });
+    }
+
+    function reset() {
+      current = 0;
+      renderQuestion();
+      gameScene.scrollTop = 0;
+    }
+
+    nextButton.addEventListener('click', () => {
+      if (!revealed) return;
+      if (current === questions.length - 1) finish();
+      else { current += 1; renderQuestion(); gameScene.scrollTop = 0; }
+    });
+
+    document.getElementById('game-home').addEventListener('click', () => navigate('#opening'));
+    document.getElementById('game-ending-home').addEventListener('click', () => navigate('#opening'));
+    document.getElementById('game-play-again').addEventListener('click', reset);
+
+    return {
+      show() { reset(); },
+      hide() {},
+      reset
+    };
   })();
 
   // ==========================================================
